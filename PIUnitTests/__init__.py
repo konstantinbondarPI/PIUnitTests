@@ -1,4 +1,6 @@
+import os
 
+import TestSearcher
 def search_config():
     print("searching for config")
     pass
@@ -11,7 +13,12 @@ def init_with_config():
 
 def search_tests():
     print("searching for tests with rules")
-    pass
+    parent_folder = os.path.dirname(os.getcwd())
+
+    config = TestSearcher.SearchConfig(search_directories=[os.path.join(parent_folder, "PIUnitTests"),
+                                                           os.path.join(parent_folder, "Example")],
+                                       filename_rules=[], function_rules=[])
+    TestSearcher.search_test_files(config)
 
 
 def execute_tests():
