@@ -22,7 +22,7 @@ class Hotel:
         if self.__check_if_guest_settled(guest_id):
             raise HotelException(HotelException.guest_already_settled)
         if room in self.__rooms:
-            if self.__settledRooms[room] != guest_id:
+            if room in self.__settledRooms and self.__settledRooms[room] == guest_id:
                 raise HotelException(HotelException.room_already_settled)
             self.__settledRooms[room] = guest_id
         else:
@@ -44,12 +44,12 @@ def prepare_hotel():
 
 def test_init():
     hotel = prepare_hotel()
-    assert len(hotel.free_rooms()) == 6
+    assert len(hotel.free_rooms()) == 5, "Blah"
 
 
 def test_settling():
     hotel = prepare_hotel()
-    assert len(hotel.free_rooms()) == 5
+    assert len(hotel.free_rooms()) == 6
     hotel.settle(101, 1)
     assert len(hotel.free_rooms()) == 5
     hotel.evict(1)
@@ -58,7 +58,7 @@ def test_settling():
 
 def test_settling_to_same_room():
     hotel = prepare_hotel()
-    assert len(hotel.free_rooms()) == 5
+    assert len(hotel.free_rooms()) == 6
     hotel.settle(101, 1)
     assert len(hotel.free_rooms()) == 5
 
@@ -70,7 +70,7 @@ def test_settling_to_same_room():
 
 def test_settling_same_guest_twice():
     hotel = prepare_hotel()
-    assert len(hotel.free_rooms()) == 5
+    assert len(hotel.free_rooms()) == 6
     hotel.settle(101, 1)
     assert len(hotel.free_rooms()) == 5
 
@@ -78,7 +78,6 @@ def test_settling_same_guest_twice():
         hotel.settle(202, 1)
     except HotelException as e:
         assert e.message == HotelException.guest_already_settled
-
 
 def test_settling_to_wrong_room():
     hotel = prepare_hotel()

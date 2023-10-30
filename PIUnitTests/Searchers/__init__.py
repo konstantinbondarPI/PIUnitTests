@@ -7,5 +7,3 @@ class SearchConfig:
     filename_rules: list[str] = field(default_factory=list)
     function_rules: list[str] = field(default_factory=list)
     in_depth_search: bool = True
-    only_matched_files_check: bool = False
-
