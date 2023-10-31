@@ -42,7 +42,7 @@ def prepare_hotel():
     return Hotel(rooms=[101, 102, 201, 202, 203, 301])
 
 
-def test_init():
+def test1_init():
     hotel = prepare_hotel()
     assert len(hotel.free_rooms()) == 5, "Blah"
 
