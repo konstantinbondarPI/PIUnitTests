@@ -1,6 +1,5 @@
 import fnmatch
 import os
-from . import SearchConfig
 
 
 class PythonFilesSearcher:

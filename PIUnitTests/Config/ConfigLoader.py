@@ -1,6 +1,6 @@
 import json
 
-from PIUnitTests.Searchers import SearchConfig
+from PIUnitTests.Config.SearchConfig import SearchConfig
 
 
 class ConfigLoader:
