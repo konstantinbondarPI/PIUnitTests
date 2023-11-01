@@ -4,12 +4,10 @@ import time
 
 
 class TestExecutor:
-    def __init__(self, test_cases):
-        self.__test_cases = test_cases
 
-    def execute(self):
-        for filename in self.__test_cases.keys():
-            test_names = self.__test_cases[filename]
+    def execute(self, test_cases):
+        for filename in test_cases.keys():
+            test_names = test_cases[filename]
             module, module_name = self.__load_module(filename)
 
             for name in test_names:

@@ -3,14 +3,13 @@ import ast
 
 class TestFunctionsSearcher:
 
-    def __init__(self, test_functions_rules, files):
+    def __init__(self, test_functions_rules):
         self.__rules = test_functions_rules
-        self.__files = files
 
-    def search(self):
+    def search(self, files):
         test_cases = {}
 
-        for filename in self.__files:
+        for filename in files:
             with open(filename, 'r') as file:
                 tree = ast.parse(file.read(), filename=filename)
                 tests = [node.name for node in ast.walk(tree) if (isinstance(node, ast.FunctionDef)

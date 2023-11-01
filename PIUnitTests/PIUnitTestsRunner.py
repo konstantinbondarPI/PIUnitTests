@@ -1,47 +1,37 @@
-import os
 
-from PIUnitTests.Searchers import SearchConfig
+from PIUnitTests.Config.ConfigLoader import ConfigLoader
 from PIUnitTests.Searchers.PythonFilesSearcher import PythonFilesSearcher
 from PIUnitTests.Searchers.TestFunctionsSearcher import TestFunctionsSearcher
 from PIUnitTests.Executors.TestExecutor import TestExecutor
 
-def search_config():
-    print("searching for config")
-    pass
 
+class PUUnitTestRunner:
+    def __init__(self):
+        self.__config_loader = ConfigLoader()
+        pass
 
-def init_with_config():
-    print("initializing with config")
-    pass
+    def run(self, path_to_config):
+        self.__init_with_config(self.__search_config(path_to_config))
+        self.__execute_tests(self.__search_tests())
 
+    def __search_tests(self):
+        files = self.__files_searcher.search()
+        return self.__test_searcher.search(files)
 
-def search_tests():
-    print("searching for tests with rules")
-    parent_folder = os.path.dirname(os.getcwd())
+    def __init_with_config(self, config):
+        self.__files_searcher = PythonFilesSearcher(search_directories=config.search_directories,
+                                                    rules=config.filename_rules,
+                                                    in_depth_search=config.in_depth_search)
+        self.__test_searcher = TestFunctionsSearcher(test_functions_rules=config.function_rules)
+        self.__executor = TestExecutor()
 
-    config = SearchConfig(search_directories=[os.path.join(parent_folder, "Example")],
-                          filename_rules=["*"],
-                          function_rules=[""], )
-    files_searcher = PythonFilesSearcher(config)
-    files = files_searcher.search()
+    def __execute_tests(self, tests):
+        self.__executor.execute(tests)
 
-    test_searcher = TestFunctionsSearcher(config.function_rules, files)
-    return test_searcher.search()
-
-
-def execute_tests(test_cases):
-    executor = TestExecutor(test_cases)
-    executor.execute()
-
-
-def generate_output():
-    print("generating output")
-    pass
+    def __search_config(self, path):
+        return self.__config_loader.load(path)
 
 
 if __name__ == "__main__":
-    search_config()
-    init_with_config()
-    test_cases = search_tests()
-    execute_tests(test_cases)
-    generate_output()
+    runner = PUUnitTestRunner()
+    runner.run("")

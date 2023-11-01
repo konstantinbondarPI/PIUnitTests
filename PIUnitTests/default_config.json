@@ -1,0 +1,12 @@
+{
+  "search_directories": [
+    "../Example"
+  ],
+  "filename_rules": [
+    "*"
+  ],
+  "function_rules": [
+    "test_"
+  ],
+  "in_depth_search": false
+}
