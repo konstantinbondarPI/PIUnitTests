@@ -1,4 +1,5 @@
 import ast
+from PIUnitTests.Logger.Logger import *
 
 
 class TestFunctionsSearcher:
@@ -11,10 +12,12 @@ class TestFunctionsSearcher:
 
         for filename in files:
             with open(filename, 'r') as file:
+                logger.log(f"Searching test functions in {filename}", Logger.__LOG_LEVEL_DEBUG__)
                 tree = ast.parse(file.read(), filename=filename)
                 tests = [node.name for node in ast.walk(tree) if (isinstance(node, ast.FunctionDef)
                                                                   and self.__check_function_name(node.name))]
                 if tests:
+                    logger.log(f"Test found {tests}", Logger.__LOG_LEVEL_DEBUG__)
                     test_cases[filename] = tests
         return test_cases
 
