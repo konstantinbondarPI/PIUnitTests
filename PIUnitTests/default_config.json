@@ -1,6 +1,5 @@
 {
   "search_directories": [
-    "../Example"
   ],
   "filename_rules": [
     "*"
