@@ -19,8 +19,9 @@ def setup_argument_parser():
     no_config_group.add_argument("--function-rules", nargs="+", help="Rules to search for test functions inside file")
     no_config_group.add_argument("--in-depth-search", action="store_true", help="Enable in-depth search")
 
-    argument_parser.add_argument("-d", action="store_true", help="Debug log level")
-    argument_parser.add_argument("-s", action="store_true", help="Debug log level")
+    log_level_group = argument_parser.add_mutually_exclusive_group()
+    log_level_group.add_argument("-d", action="store_true", help="Debug log level")
+    log_level_group.add_argument("-s", action="store_true", help="Silent mode")
 
     return argument_parser
 
